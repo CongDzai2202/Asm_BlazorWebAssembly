@@ -1,0 +1,112 @@
+﻿@page "/fetchsinhviendetails"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+<h1>User Data</h1>
+<p>Blazor CRUD operation</p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/SinhVien/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterSinhVien" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (SinhVienList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Mã Sinh Viên</th>
+                <th>Họ Và Tên</th>
+                <th>Giới Tính</th>
+                <th>Địa Chỉ</th>
+                <th>Email</th>
+                <th>Mã Lớp</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sinhVien in SinhVienList)
+            {
+                <tr>
+                    <td>@sinhVien.MSV</td>
+                    <td>@sinhVien.HoVaTen</td>
+                    @if (@sinhVien.GioiTinh == 1)
+                    {
+                        <td>Nam</td>
+                    }
+                    else
+                    {
+                        <td>Nữ</td>
+                    }
+                    <td>@sinhVien.DiaChi</td>
+                    <td>@sinhVien.Email</td>
+                    <td>@sinhVien.MaLop</td>
+                    <td>
+                        <a href='/SinhVien/edit/@sinhVien.MSV' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/SinhVien/delete/@sinhVien.MSV' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@code {
+    protected List<SinhVien> SinhVienList = new();
+    protected List<SinhVien> searchSinhVienData = new();
+    protected SinhVien sinhVien = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSinhVien();
+    }
+    protected async Task GetSinhVien()
+    {
+        SinhVienList = await Http.GetFromJsonAsync<List<SinhVien>>("api/SinhVien");
+        searchSinhVienData  = SinhVienList;
+    }
+    protected void FilterSinhVien()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            SinhVienList = searchSinhVienData 
+                .Where(x => x.HoVaTen.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .ToList();
+        }
+        else
+        {
+            SinhVienList = searchSinhVienData;
+        }
+    }
+    protected void DeleteConfirm(int msv)
+    {
+        sinhVien = SinhVienList.FirstOrDefault(x => x.MSV == msv);
+    }
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        SinhVienList = searchSinhVienData;
+    }
+}

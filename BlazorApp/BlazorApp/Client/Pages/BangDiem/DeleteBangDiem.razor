@@ -1,0 +1,51 @@
+﻿@page "/BangDiem/delete/{Id:int}"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+<h2>Delete User</h2>
+<br />
+<div class="form-group">
+    <h4>Do you want to delete this user?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>@bangDiem.Id</td>
+            </tr>
+            <tr>
+                <td>MSV</td>
+                <td>@bangDiem.MSV</td>
+            </tr>
+            <tr>
+                <td>Mã Môn Học</td>
+                <td>@bangDiem.MaMonHoc</td>
+            </tr>
+            <tr>
+                <td>Điểm Tổng Kết</td>
+                <td>@bangDiem.DiemTongKet</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveUser(bangDiem.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    BangDiem bangDiem = new BangDiem();
+    protected override async Task OnInitializedAsync()
+    {
+        bangDiem = await Http.GetFromJsonAsync<BangDiem>("/api/BangDiem/" + Convert.ToInt32(Id));
+    }
+    protected async Task RemoveUser(int ID)
+    {
+        await Http.DeleteAsync("api/BangDiem/" + ID);
+        NavigationManager.NavigateTo("/fetchbangdiemdetails");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/fetchbangdiemdetails");
+    }
+}

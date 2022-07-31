@@ -1,0 +1,91 @@
+﻿@page "/SinhVien/add"
+
+@page "/SinhVien/edit/{MSV:int}"
+
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+
+@inject NavigationManager NavigationManager
+<h1>Lớp</h1>
+<hr />
+<EditForm Model="@sinhVien" OnValidSubmit="SaveSinhVien">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="MSV" class="form-label">Mã Sinh Viên</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sinhVien.MSV" />
+        </div>
+        <ValidationMessage For="@(() => sinhVien.MSV)" />
+    </div>
+    <div class="mb-3">
+        <label for="HoVaTen" class="form-label">Họ Và Tên</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="sinhVien.HoVaTen" />
+        </div>
+        <ValidationMessage For="@(() =>sinhVien.HoVaTen)" />
+    </div>
+    <div class="mb-3">
+        <label for="GioiTinh" class="form-label">Giới Tính (1 Nam/2 Nữ)</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sinhVien.GioiTinh" />
+        </div>
+        <ValidationMessage For="@(() =>sinhVien.GioiTinh)" />
+    </div>
+    <div class="mb-3">
+        <label for="DiaChi" class="form-label">Địa Chỉ</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="sinhVien.DiaChi" />
+        </div>
+        <ValidationMessage For="@(() =>sinhVien.DiaChi)" />
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="sinhVien.Email" />
+        </div>
+        <ValidationMessage For="@(() =>sinhVien.Email)" />
+    </div>
+    <div class="mb-3">
+        <label for="MaLop" class="form-label">Mã Lớp</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="sinhVien.MaLop" />
+        </div>
+        <ValidationMessage For="@(() =>sinhVien.MaLop)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+@code {
+
+    [Parameter]
+    public int MSV { get; set; }
+    protected string Title = "Add";
+    protected SinhVien sinhVien = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (MSV != 0)
+        {
+            Title = "Edit";
+            sinhVien = await Http.GetFromJsonAsync<SinhVien>("api/SinhVien/" + MSV);
+        }
+    }
+    protected async Task SaveSinhVien()
+    {
+        if (sinhVien.MSV != 0)
+        {
+            await Http.PutAsJsonAsync("api/SinhVien", MSV);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("api/SinhVien", MSV);
+        }
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/fetchsinhviendetails");
+    }
+
+    }

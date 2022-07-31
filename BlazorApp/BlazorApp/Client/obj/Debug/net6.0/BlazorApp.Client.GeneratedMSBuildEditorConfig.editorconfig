@@ -1,0 +1,111 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = browser
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = true
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = BlazorApp.Client
+build_property.RootNamespace = BlazorApp.Client
+build_property.ProjectDir = D:\NET105\BlazorApp\BlazorApp\Client\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\NET105\BlazorApp\BlazorApp\Client
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/BangDiem/BangDiemAdd.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFuZ0RpZW1cQmFuZ0RpZW1BZGQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/BangDiem/BangDiemDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFuZ0RpZW1cQmFuZ0RpZW1EZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/BangDiem/DeleteBangDiem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFuZ0RpZW1cRGVsZXRlQmFuZ0RpZW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Lop/DeleteBangDiem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9wXERlbGV0ZUJhbmdEaWVtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Lop/LopCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9wXExvcENyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Lop/LopDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9wXExvcERldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/MonHoc/AddMonHoc.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9uSG9jXEFkZE1vbkhvYy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/MonHoc/DeleteMonHoc.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9uSG9jXERlbGV0ZU1vbkhvYy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/MonHoc/MonHocDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9uSG9jXE1vbkhvY0RldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Nganh/AddNganh.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmdhbmhcQWRkTmdhbmgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Nganh/DeleteNganh.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmdhbmhcRGVsZXRlTmdhbmgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/Nganh/NganhDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmdhbmhcTmdhbmhEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/SinhVien/AddSinhVien.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2luaFZpZW5cQWRkU2luaFZpZW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/SinhVien/DeleteSinhVien.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2luaFZpZW5cRGVsZXRlU2luaFZpZW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Pages/SinhVien/SinhVienDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2luaFZpZW5cU2luaFZpZW5EZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-33op3vkbmc
+
+[D:/NET105/BlazorApp/BlazorApp/Client/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-2uyxcflnte

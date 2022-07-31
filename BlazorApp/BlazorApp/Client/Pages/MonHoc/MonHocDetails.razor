@@ -1,0 +1,99 @@
+﻿@page "/fetchmonhocdetails"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+<h1>User Data</h1>
+<p>Blazor CRUD operation</p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/MonHoc/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterMonHoc" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (MonHocList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Mã Môn Hoc</th>
+                <th>Tên Môn Học</th>
+                <th>Số Tín Chỉ</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var monHoc in MonHocList)
+            {
+                <tr>
+                    <td>@monHoc.MaMonHoc</td>
+                    <td>@monHoc.TenMonHoc</td>
+                    <td>@monHoc.SoTinChi</td>
+                    <td>
+                        <a href='/MonHoc/edit/@monHoc.MaMonHoc' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/MonHoc/delete/@monHoc.MaMonHoc' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@code {
+    protected List<MonHoc> MonHocList = new();
+    protected List<MonHoc> searchMonHocData = new();
+    protected MonHoc monHoc = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetMonHoc();
+    }
+    protected async Task GetMonHoc()
+    {
+        MonHocList = await Http.GetFromJsonAsync<List<MonHoc>>("api/MonHoc");
+        searchMonHocData  = MonHocList;
+    }
+    protected void FilterMonHoc()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            MonHocList = searchMonHocData 
+                .Where(x => x.TenMonHoc.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .ToList();
+        }
+        else
+        {
+            MonHocList = searchMonHocData;
+        }
+    }
+    protected void DeleteConfirm(int maMonHoc)
+    {
+        monHoc = MonHocList.FirstOrDefault(x => x.MaMonHoc == maMonHoc);
+    }
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        MonHocList = searchMonHocData;
+    }
+}

@@ -1,0 +1,101 @@
+﻿@page "/fetchlopdetails"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+<h1>User Data</h1>
+<p>Blazor CRUD operation</p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/Lop/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterBangDiem" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (LopList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Mã Lớp</th>
+                <th>Tên Lớp</th>
+                <th>Giáo Viên CN</th>
+                <th>Mã Nganh</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lop in LopList)
+            {
+                <tr>
+                    <td>@lop.MaLop</td>
+                    <td>@lop.TenLop</td>
+                    <td>@lop.GiaoVien</td>
+                    <td>@lop.MaNghanh</td>
+                    <td>
+                        <a href='/Lop/edit/@lop.MaLop' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/Lop/delete/@lop.MaLop' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@code {
+    protected List<Lop> LopList = new();
+    protected List<Lop> searchLopData = new();
+    protected Lop lop = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetLop();
+    }
+    protected async Task GetLop()
+    {
+        LopList = await Http.GetFromJsonAsync<List<Lop>>("api/Lop");
+        searchLopData  = LopList;
+    }
+    protected void FilterBangDiem()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            LopList = searchLopData
+                .Where(x => x.TenLop.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .ToList();
+        }
+        else
+        {
+            LopList = searchLopData;
+        }
+    }
+    protected void DeleteConfirm(int maLop)
+    {
+        lop = LopList.FirstOrDefault(x => x.MaLop == maLop);
+    }
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        LopList = searchLopData;
+    }
+}

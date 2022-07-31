@@ -1,0 +1,79 @@
+﻿@page "/Lop/add"
+
+@page "/Lop/edit/{MaLop:int}"
+
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+
+@inject NavigationManager NavigationManager
+<h1>Lớp</h1>
+<hr />
+<EditForm Model="@lop" OnValidSubmit="SaveLop">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="MaLop" class="form-label">Mã Lớp</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="lop.MaLop" />
+        </div>
+        <ValidationMessage For="@(() => lop.MaLop)" />
+    </div>
+    <div class="mb-3">
+        <label for="TenLop" class="form-label">Tên Lớp</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="lop.TenLop" />
+        </div>
+        <ValidationMessage For="@(() =>lop.TenLop)" />
+    </div>
+    <div class="mb-3">
+        <label for="GiaoVien" class="form-label">Tên Giảng Viên</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="lop.GiaoVien" />
+        </div>
+        <ValidationMessage For="@(() => lop.GiaoVien)" />
+    </div>
+    <div class="mb-3">
+        <label for="MaNghanh" class="form-label">Mã Ngành</label>
+        <div class="col-md-4">
+            <InputNumber class="form-control" @bind-Value="lop.MaNghanh" />
+        </div>
+        <ValidationMessage For="@(() => lop.MaNghanh)" />
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+@code {
+
+    [Parameter]
+    public int MaLop { get; set; }
+    protected string Title = "Add";
+    protected BlazorApp.Shared.Models.Lop lop = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (MaLop != 0)
+        {
+            Title = "Edit";
+            lop = await Http.GetFromJsonAsync<BlazorApp.Shared.Models.Lop>("api/Lop/" + MaLop);
+        }
+    }
+    protected async Task SaveLop()
+    {
+        if (lop.MaLop != 0)
+        {
+            await Http.PutAsJsonAsync("api/Lop", MaLop);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("api/Lop", MaLop);
+        }
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/fetchlopdetails");
+    }
+
+    }

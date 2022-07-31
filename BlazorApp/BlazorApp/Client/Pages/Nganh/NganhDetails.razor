@@ -1,0 +1,97 @@
+﻿@page "/fetchnganhdetails"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+<h1>User Data</h1>
+<p>Blazor CRUD operation</p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/Nganh/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterNganh" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (NganhList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Mã Ngành</th>
+                <th>Tên Ngành</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nganh in NganhList)
+            {
+                <tr>
+                    <td>@nganh.MaNghanh</td>
+                    <td>@nganh.TenNganh</td>
+                    <td>
+                        <a href='/Nganh/edit/@nganh.MaNghanh' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/Nganh/delete/@nganh.MaNghanh' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@code {
+    protected List<Nganh> NganhList = new();
+    protected List<Nganh> searchNganhData = new();
+    protected Nganh nganh = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetNganh();
+    }
+    protected async Task GetNganh()
+    {
+        NganhList = await Http.GetFromJsonAsync<List<Nganh>>("api/Nganh");
+        searchNganhData  = NganhList;
+    }
+    protected void FilterNganh()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            NganhList = searchNganhData 
+                .Where(x => x.TenNganh.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .ToList();
+        }
+        else
+        {
+            NganhList = searchNganhData;
+        }
+    }
+    protected void DeleteConfirm(int maNganh)
+    {
+        nganh = NganhList.FirstOrDefault(x => x.MaNghanh == maNganh);
+    }
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        NganhList = searchNganhData;
+    }
+}

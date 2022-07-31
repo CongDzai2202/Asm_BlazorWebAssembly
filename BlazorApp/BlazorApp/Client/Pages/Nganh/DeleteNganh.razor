@@ -1,0 +1,43 @@
+﻿@page "/Nganh/delete/{Id:int}"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+<h2>Delete User</h2>
+<br />
+<div class="form-group">
+    <h4>Do you want to delete this user?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Mã Ngành</td>
+                <td>@nganh.MaNghanh</td>
+            </tr>
+            <tr>
+                <td>Tên Ngành</td>
+                <td>@nganh.TenNganh</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveUser(nganh.MaNghanh))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    Nganh nganh = new Nganh();
+    protected override async Task OnInitializedAsync()
+    {
+        nganh = await Http.GetFromJsonAsync<Nganh>("/api/Nganh/" + Convert.ToInt32(Id));
+    }
+    protected async Task RemoveUser(int ID)
+    {
+        await Http.DeleteAsync("api/Nganh/" + ID);
+        NavigationManager.NavigateTo("/fetchnganhdetails");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/fetchnganhdetails");
+    }
+}

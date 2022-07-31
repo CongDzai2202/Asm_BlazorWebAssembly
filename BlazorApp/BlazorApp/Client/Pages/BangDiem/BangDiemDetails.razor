@@ -1,0 +1,97 @@
+﻿@page "/fetchbangdiemdetails"
+@using BlazorApp.Shared.Models
+@inject HttpClient Http
+<h1>User Data</h1>
+<p>Blazor CRUD operation</p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/BangDiem/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterBangDiem" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (BangDiemList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Msv</th>
+                <th>Mã Môn Học</th>
+                <th>Điểm Thưởng</th>
+                <th>Điểm Giữa Kỳ</th>
+                <th>Điểm Cuối Kỳ</th>
+                <th>Điểm Tổng Kết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bangDiem in BangDiemList)
+            {
+                <tr>
+                    <td>@bangDiem.Id</td>
+                    <td>@bangDiem.MSV</td>
+                    <td>@bangDiem.MaMonHoc</td>
+                    <td>@bangDiem.DiemThuong</td>
+                    <td>@bangDiem.DiemGiuaKy</td>
+                    <td>@bangDiem.DiemCuoiKy</td>
+                    <td>@bangDiem.DiemTongKet</td>
+                    <td>
+                        <a href='/BangDiem/edit/@bangDiem.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/BangDiem/delete/@bangDiem.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@code {
+    protected List<BangDiem> BangDiemList = new();
+    protected List<BangDiem> searchBangDiemData = new();
+    protected BangDiem bangDiem = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBangDiem();
+    }
+    protected async Task GetBangDiem()
+    {
+        BangDiemList = await Http.GetFromJsonAsync<List<BangDiem>>("api/BangDiem");
+        searchBangDiemData = BangDiemList;
+    }
+    protected void FilterBangDiem()
+    {
+       
+    }
+    protected void DeleteConfirm(int BdID)
+    {
+        bangDiem = BangDiemList.FirstOrDefault(x => x.Id == BdID);
+    }
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        BangDiemList = searchBangDiemData;
+    }
+}
